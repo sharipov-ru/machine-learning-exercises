@@ -30,10 +30,15 @@ regularizationTerm = lambda / (2 * m) * sum(penalizedParameters.^2)
 J = 1 / m * sum(-y' * log(sigmoid(X * theta)) - (1-y')*(log(1-sigmoid(X * theta)))) + regularizationTerm
 
 
+unRegularizedGradients = 1 / m * X' * (sigmoid(X * theta) - y)
 
+% calculate 0-th gradient
+grad(1) = unRegularizedGradients(1)
 
-
-
+% calculate other gradients
+for j=2:size(grad)
+  grad(j) = unRegularizedGradients(j) + lambda / m * penalizedParameters(j-1);
+end;
 
 % =============================================================
 
