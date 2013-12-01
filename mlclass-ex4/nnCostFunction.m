@@ -62,6 +62,27 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+for i=1:m
+  % one training example: i-th row of X. (has size 1 x 401)
+  ith_x = [1, X(i, :)]
+
+  % compute activations of the 2nd layer (hidden layer, has size 25 x 1)
+  a2 = sigmoid(Theta1 * ith_x')
+
+  % add a bias unit to 2nd layer (now a2 has size 26 x 1)
+  a2 = [1; a2]
+
+  % compute activations of the 3rd layer (output layer, has size 10 x 1)
+  a3 = sigmoid(Theta2 * a2)
+
+  y_kth = zeros(num_labels, 1)'
+  y_kth(y(i)) = 1
+
+  J = J + sum(-y_kth * log(a3) - (1 - y_kth)*log(1-a3))
+
+end
+
+J = 1/m * J
 
 
 
