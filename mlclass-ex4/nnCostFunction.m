@@ -82,7 +82,33 @@ for i=1:m
 
 end
 
-J = 1/m * J
+penalizedTheta1 = Theta1(:, 2:end)
+penalizedTheta2 = Theta2(:, 2:end)
+
+
+value = sum(sum(penalizedTheta1.^2)) + sum(sum(penalizedTheta2.^2))
+
+% regularizationTheta1 = 0
+%
+% for j=1:size(penalizedTheta1, 1)
+%   for k=1:size(penalizedTheta1, 2)
+%     regularizationTheta1 = regularizationTheta1 + penalizedTheta1(j,k) ^ 2
+%   end
+% end
+%
+% regularizationTheta2 = 0
+%
+% for j=1:size(penalizedTheta2, 1)
+%   for k=1:size(penalizedTheta2, 2)
+%     regularizationTheta2 = regularizationTheta2 + penalizedTheta2(j,k) ^ 2
+%   end
+% end
+
+
+% reqularization = lambda / (2 * m) + (regularizationTheta1 + regularizationTheta2)
+
+reqularization = lambda / (2 * m) * value
+J = 1/m * J + reqularization
 
 
 
