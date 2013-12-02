@@ -62,32 +62,49 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+
+triangle_1 = zeros(hidden_layer_size, input_layer_size + 1)
+triangle_2 = zeros(num_labels, hidden_layer_size + 1)
 for i=1:m
   % one training example: i-th row of X. (has size 1 x 401)
-  ith_x = [1, X(i, :)]
+  a1 = [1; X(i, :)']
 
   % compute activations of the 2nd layer (hidden layer, has size 25 x 1)
-  a2 = sigmoid(Theta1 * ith_x')
+  z2 = Theta1 * a1
+  a2 = sigmoid(z2)
 
   % add a bias unit to 2nd layer (now a2 has size 26 x 1)
   a2 = [1; a2]
 
   % compute activations of the 3rd layer (output layer, has size 10 x 1)
-  a3 = sigmoid(Theta2 * a2)
+  z3 = Theta2 * a2
+  a3 = sigmoid(z3)
 
   y_kth = zeros(num_labels, 1)'
   y_kth(y(i)) = 1
 
   J = J + sum(-y_kth * log(a3) - (1 - y_kth)*log(1-a3))
 
+  % calculate deltas (DO NOT calculate delta_1)
+  delta3_kth = a3 - y_kth'
+  delta2_kth = (Theta2' * delta3_kth).*sigmoidGradient([1; z2])
+
+  % accumulate the gradient
+  triangle_1 = triangle_1 + delta2_kth(2:end) * a1'
+  triangle_2 = triangle_2 + delta3_kth * a2'
 end
 
 penalizedTheta1 = Theta1(:, 2:end)
 penalizedTheta2 = Theta2(:, 2:end)
 
-
 value = sum(sum(penalizedTheta1.^2)) + sum(sum(penalizedTheta2.^2))
+reqularization = lambda / (2 * m) * value
+J = 1/m * J + reqularization
 
+Theta1_grad = triangle_1 / m + lambda * Theta1
+Theta2_grad = triangle_2 / m + lambda * Theta2
+
+% FeedForward with for loops
 % regularizationTheta1 = 0
 %
 % for j=1:size(penalizedTheta1, 1)
@@ -103,13 +120,7 @@ value = sum(sum(penalizedTheta1.^2)) + sum(sum(penalizedTheta2.^2))
 %     regularizationTheta2 = regularizationTheta2 + penalizedTheta2(j,k) ^ 2
 %   end
 % end
-
-
 % reqularization = lambda / (2 * m) + (regularizationTheta1 + regularizationTheta2)
-
-reqularization = lambda / (2 * m) * value
-J = 1/m * J + reqularization
-
 
 
 % -------------------------------------------------------------
