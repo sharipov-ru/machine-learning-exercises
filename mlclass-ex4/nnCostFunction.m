@@ -101,29 +101,18 @@ value = sum(sum(penalizedTheta1.^2)) + sum(sum(penalizedTheta2.^2))
 reqularization = lambda / (2 * m) * value
 J = 1/m * J + reqularization
 
-Theta1_grad = triangle_1 / m + lambda * Theta1
-Theta2_grad = triangle_2 / m + lambda * Theta2
+% compute regularization for all Theta-jth except first column
+Theta1_regularization = lambda / m * Theta1(:, 2:end)
+Theta2_regularization = lambda / m * Theta2(:, 2:end)
 
-% FeedForward with for loops
-% regularizationTheta1 = 0
-%
-% for j=1:size(penalizedTheta1, 1)
-%   for k=1:size(penalizedTheta1, 2)
-%     regularizationTheta1 = regularizationTheta1 + penalizedTheta1(j,k) ^ 2
-%   end
-% end
-%
-% regularizationTheta2 = 0
-%
-% for j=1:size(penalizedTheta2, 1)
-%   for k=1:size(penalizedTheta2, 2)
-%     regularizationTheta2 = regularizationTheta2 + penalizedTheta2(j,k) ^ 2
-%   end
-% end
-% reqularization = lambda / (2 * m) + (regularizationTheta1 + regularizationTheta2)
+Theta1_empty_column = zeros(size(Theta1, 1), 1)
+Theta2_empty_column = zeros(size(Theta2, 1), 1)
 
+% add regularization to penalized Theta(i,j) values
+% Use empty column of zeros to not regularize first Theta-lth columns
+Theta1_grad = triangle_1 / m + [ Theta1_empty_column, Theta1_regularization ]
+Theta2_grad = triangle_2 / m + [ Theta1_empty_column, Theta2_regularization ]
 
-% -------------------------------------------------------------
 
 % =========================================================================
 
