@@ -20,6 +20,18 @@ grad = zeros(size(theta));
 %
 
 
+% predictions of hypothesis on all m examples
+predictions = X * theta
+
+% squared error
+sqrErrors = (predictions - y).^2
+
+% compute regularization
+regularization = lambda / (2*m) * sum(theta(2:end).^2)
+
+% compute cost function
+J = 1 / ( 2*m ) * sum(sqrErrors) + regularization
+
 
 
 
