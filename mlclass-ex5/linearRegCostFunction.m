@@ -32,6 +32,18 @@ regularization = lambda / (2*m) * sum(theta(2:end).^2)
 % compute cost function
 J = 1 / ( 2*m ) * sum(sqrErrors) + regularization
 
+% grad = 1 / m * X' * sum((predictions - y)) + lambda / m * theta
+
+unRegularizedGradients = 1 / m * X' * (predictions - y)
+
+% calculate 0-th gradient
+grad(1) = unRegularizedGradients(1)
+
+% calculate other gradients
+for j=2:size(grad)
+  grad(j) = unRegularizedGradients(j) + lambda / m * theta(j);
+end;
+
 
 
 
