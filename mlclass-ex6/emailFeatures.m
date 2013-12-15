@@ -7,6 +7,9 @@ function x = emailFeatures(word_indices)
 % Total number of words in the dictionary
 n = 1899;
 
+% Total elements in word_indices
+word_indices_size = size(word_indices, 1)
+
 % You need to return the following variables correctly.
 x = zeros(n, 1);
 
@@ -48,6 +51,11 @@ x = zeros(n, 1);
 %
 %
 
+for j=1:word_indices_size
+  current_index = word_indices(j)
+
+  x(current_index) = 1
+end
 
 
 
