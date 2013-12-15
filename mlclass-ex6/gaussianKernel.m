@@ -16,8 +16,19 @@ sim = 0;
 %
 %
 
+% number of coordinates
+dimension = size(x1, 1)
 
+% distance counter
+distance = 0
 
+% iterate over coordinates and compute distance
+for j=1:dimension
+  distance = distance + (x1(j) - x2(j))^2
+end
+
+% gaussian kernel
+sim = exp(- distance / ( 2 * sigma^2))
 
 
 
