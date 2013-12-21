@@ -29,20 +29,15 @@ for i=1:examples_size
   % compute distances from current point to all centroids
   distances = zeros(K, 1)
   for j=1:K
+    % take K-th centroid
     current_centroid = centroids(j, :)
 
-    % distance
-    distance = 0
-    for l=1:size(current_centroid, 2)
-      distance = distance + (current_example(l) - current_centroid(l))^2
-    end
-
-    distances(j) = sqrt(distance)
+    % compute distance
+    distances(j) = norm(current_example - current_centroid)
   end
 
   % pick the lowest distance's centroid index
-  [min_value, index] = min(distances)
-  idx(i) = index
+  [_, idx(i)] = min(distances)
 end
 
 
