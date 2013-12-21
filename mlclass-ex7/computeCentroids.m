@@ -26,7 +26,12 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+for i=1:K
+  ids_of_centroid_points = find(idx == i)
+  points = X(ids_of_centroid_points, :)
 
+  centroids(i, :) = 1 / size(points, 1) * sum(points)
+end
 
 
 
