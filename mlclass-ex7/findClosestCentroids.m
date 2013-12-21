@@ -21,6 +21,29 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+examples_size = size(X, 1)
+
+for i=1:examples_size
+  current_example = X(i, :)
+
+  % compute distances from current point to all centroids
+  distances = zeros(K, 1)
+  for j=1:K
+    current_centroid = centroids(j, :)
+
+    % distance
+    distance = 0
+    for l=1:size(current_centroid, 2)
+      distance = distance + (current_example(l) - current_centroid(l))^2
+    end
+
+    distances(j) = sqrt(distance)
+  end
+
+  % pick the lowest distance's centroid index
+  [min_value, index] = min(distances)
+  idx(i) = index
+end
 
 
 
