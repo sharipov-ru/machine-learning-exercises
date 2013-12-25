@@ -22,25 +22,12 @@ sigma2 = zeros(n, 1);
 %
 
 % compute mu
-for i=1:n
-  for j=1:m
-    mu(i) = mu(i) + X(j, i)
-  end
-end
-
-mu = 1/m * mu
+mu = 1/m * sum(X)
 
 % compute sigma2
-
 for i=1:n
-  for j=1:m
-    sigma2(i) = sigma2(i) + ( X(j, i) - mu(i) )^2
-  end
+  sigma2(i) = 1/m * sum((X(:, i) - mu(i)).^2)
 end
-
-sigma2 = 1/m * sigma2
-
-
 
 
 
