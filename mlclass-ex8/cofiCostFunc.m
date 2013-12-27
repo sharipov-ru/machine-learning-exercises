@@ -55,8 +55,9 @@ X_grad = errors * Theta
 % compute gradient for Theta
 Theta_grad = errors' * X
 
-
-
+% add regularization to gradients
+X_grad = X_grad + lambda * X
+Theta_grad = Theta_grad + lambda * Theta
 
 
 
