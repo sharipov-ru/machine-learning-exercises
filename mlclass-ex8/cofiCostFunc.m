@@ -41,6 +41,8 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+squared_errors = (X * Theta' - Y).^2
+J = 1/2 * sum(sum(squared_errors .* R))
 
 
 
