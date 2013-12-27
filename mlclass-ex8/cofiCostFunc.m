@@ -45,6 +45,10 @@ errors = (X * Theta' - Y) .* R
 squarred_errors = errors.^2
 J = 1/2 * sum(sum(squarred_errors))
 
+% add regularization to cost
+regularization = lambda / 2 * sum(sum(Theta .^2)) + lambda / 2 * sum(sum(X .^2))
+J = J + regularization
+
 % compute gradient for X
 X_grad = errors * Theta
 
