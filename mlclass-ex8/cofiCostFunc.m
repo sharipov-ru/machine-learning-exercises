@@ -40,10 +40,16 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% compute cost
+errors = (X * Theta' - Y) .* R
+squarred_errors = errors.^2
+J = 1/2 * sum(sum(squarred_errors))
 
-squared_errors = (X * Theta' - Y).^2
-J = 1/2 * sum(sum(squared_errors .* R))
+% compute gradient for X
+X_grad = errors * Theta
 
+% compute gradient for Theta
+Theta_grad = errors' * X
 
 
 
